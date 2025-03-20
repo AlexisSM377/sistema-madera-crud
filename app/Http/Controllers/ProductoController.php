@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
@@ -12,7 +14,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::all();
+        $productos = Producto::orderBy('id', 'desc')->get();
         return view('admin.productos.index', compact('productos'));
     }
 
@@ -21,7 +23,8 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+        $categorias = Categoria::all();
+        return view('admin.productos.create', compact('categorias'));
     }
 
     /**
@@ -29,7 +32,30 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required',
+            'precio' => 'required|numeric',
+            'stock' => 'required|integer',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'ancho' => 'required|numeric',
+            'largo' => 'required|numeric',
+            'alto' => 'required|numeric',
+            'peso' => 'required|numeric',
+            'categoria_id' => 'required|exists:categorias,id'
+        ]);
+
+        $imagenPath = $request->file('imagen') ? $request->file('imagen')->store('productos', 'public') : null;
+
+        Producto::create($request->except('imagen') + ['imagen' => $imagenPath]);
+
+        session()->flash('swal', [
+            'icon' => 'success',
+            'title' => 'Producto creado con éxito!',
+            'text' => 'El prodcuto se ha creado correctamente.'
+        ]);
+    
+        return redirect()->route('admin.productos.index');
     }
 
     /**
@@ -37,7 +63,7 @@ class ProductoController extends Controller
      */
     public function show(Producto $producto)
     {
-        //
+        return view('admin.productos.show', compact('producto'));
     }
 
     /**
@@ -45,7 +71,8 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
-        //
+        $categorias = Categoria::all();
+        return view('admin.productos.edit', compact('producto', 'categorias'));
     }
 
     /**
@@ -53,7 +80,32 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required',
+            'precio' => 'required|numeric',
+            'stock' => 'required|integer',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'ancho' => 'required|numeric',
+            'largo' => 'required|numeric',
+            'alto' => 'required|numeric',
+            'peso' => 'required|numeric',
+            'categoria_id' => 'required|exists:categorias,id'
+        ]);
+
+        if ($request->hasFile('imagen')) {
+            $imagenPath = $request->file('imagen')->store('productos', 'public');
+            $producto->imagen = $imagenPath;
+        }
+        $producto->update($request->except('imagen'));
+
+        session()->flash('swal', [
+            'icon' => 'success',
+            'title' => 'Producto actualizado con éxito!',
+            'text' => 'El producto se ha actualizado correctamente.'
+        ]);
+
+        return redirect()->route('admin.productos.index');
     }
 
     /**
@@ -61,6 +113,17 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        //
+        if ($producto->imagen) {
+            Storage::disk('public')->delete($producto->imagen);
+        }
+        
+        $producto->delete();
+
+        session()->flash('swal', [
+            'icon' => 'success',
+            'title' => 'Producto eliminado con éxito!',
+            'text' => 'El producto se ha eliminado correctamente.'
+        ]);
+        return redirect()->route('admin.productos.index');
     }
 }

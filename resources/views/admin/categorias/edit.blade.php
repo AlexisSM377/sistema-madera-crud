@@ -28,6 +28,13 @@
                         value="{{old('imagen', $categoria->imagen)}}" 
                     />
                 </div>
+                @if ($categoria->imagen)
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Imagen actual</label>
+                        <img src="{{ asset('storage/' . $categoria->imagen) }}" alt="Imagen Categoria" class="w-auto h-42 object-cover mt-2 rounded-md">
+                    </div>
+                @endif
+
                 <div class="flex justify-end">
                     <flux:button 
                         variant="primary" 
@@ -38,4 +45,5 @@
                     </flux:button>
                 </div>
           </form>
+    </div>
 </x-layouts.app>

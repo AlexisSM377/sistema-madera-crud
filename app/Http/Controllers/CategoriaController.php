@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 
 class CategoriaController extends Controller
@@ -107,6 +108,10 @@ class CategoriaController extends Controller
      */
     public function destroy(Categoria $categoria)
     {
+        if ($categoria->imagen) {
+            Storage::disk('public')->delete($categoria->imagen);
+        }
+
         $categoria->delete();
 
         session()->flash('swal', [
