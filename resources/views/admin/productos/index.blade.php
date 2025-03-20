@@ -62,7 +62,7 @@
                         <td class="px-6 py-4 dark:text-white font-bold">
                             {{ $producto->nombre }}
                         </td>
-                        <td class="px-6 py-4 dark:text-white font-bold">
+                        <td class="px-6 py-4 dark:text-white font-bold text-justify">
                             {{ $producto->descripcion }}
                         </td>
                         <td class="px-6 py-4 dark:text-white font-bold">
