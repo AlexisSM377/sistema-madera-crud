@@ -49,7 +49,7 @@ class PuntoVentaController extends Controller
         // Generar el PDF
         $pdf = Pdf::loadView('admin.punto-venta.ticket', compact('ticket'));
         $pdfPath = "tickets/ticket_{$ticket->id}.pdf";
-        \Storage::disk('public')->put($pdfPath, $pdf->output());
+        Storage::disk('public')->put($pdfPath, $pdf->output());
 
         // Actualizar la ruta del PDF en el ticket
         $ticket->update(['pdf_path' => $pdfPath]);
