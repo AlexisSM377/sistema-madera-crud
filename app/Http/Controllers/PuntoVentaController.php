@@ -50,9 +50,10 @@ class PuntoVentaController extends Controller
         $pdf = Pdf::loadView('admin.punto-venta.ticket', compact('ticket'));
         $pdfPath = "tickets/ticket_{$ticket->id}.pdf";
         Storage::disk('public')->put($pdfPath, $pdf->output());
+        $pdfUrl = Storage::url($pdfPath); // Generar la URL pública
 
         // Actualizar la ruta del PDF en el ticket
-        $ticket->update(['pdf_path' => $pdfPath]);
+        $ticket->update(['pdf_path' => $pdfUrl]);
 
         session()->flash('swal', [
             'icon' => 'success',

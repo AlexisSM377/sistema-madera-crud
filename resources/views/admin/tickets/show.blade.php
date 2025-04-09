@@ -36,7 +36,7 @@
         <div class="py-4 flex justify-end">
 
             <a 
-                href="{{ Storage::url($ticket->pdf_path) }}" 
+                href="{{ $ticket->pdf_path }}" 
                 target="_blank" 
                 class="bg-blue-500 text-white p-2 rounded mt-4 inline-block"
             >
