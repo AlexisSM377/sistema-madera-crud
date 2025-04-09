@@ -18,10 +18,10 @@ return new class extends Migration
             $table->decimal('precio', 8, 2);
             $table->integer('stock');
             $table->string('imagen')->nullable();
-            $table->decimal('ancho', 8, 2);
-            $table->decimal('largo', 8, 2);
-            $table->decimal('alto', 8, 2);
-            $table->decimal('peso', 8, 2);
+            $table->string('ancho', 8, 2);
+            $table->string('largo', 8, 2);
+            $table->string('alto', 8, 2);
+            $table->string('peso', 8, 2);
             $table->foreignId('categoria_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

@@ -38,10 +38,10 @@ class ProductoController extends Controller
             'precio' => 'required|numeric',
             'stock' => 'required|integer',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'ancho' => 'required|numeric',
-            'largo' => 'required|numeric',
-            'alto' => 'required|numeric',
-            'peso' => 'required|numeric',
+            'ancho' => 'required|string',
+            'largo' => 'required|string',
+            'alto' => 'required|string',
+            'peso' => 'required|string',
             'categoria_id' => 'required|exists:categorias,id'
         ]);
 

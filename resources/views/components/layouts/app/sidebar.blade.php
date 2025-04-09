@@ -18,7 +18,19 @@
                 'icon' => 'building-storefront',
                 'url' => route('admin.productos.index'),
                 'current' => request()->routeIs('admin.productos.*'),
-            ]
+            ],
+            [
+                'name' => 'Punto de Venta',
+                'icon' => 'presentation-chart-line',
+                'url' => route('admin.punto-venta.index'),
+                'current' => request()->routeIs('admin.punto-venta.*'),
+            ],
+            [
+                'name' => 'Tickets',
+                'icon' => 'ticket',
+                'url' => route('admin.tickets.index'),
+                'current' => request()->routeIs('admin.tickets.*'),
+            ],
         ],
     ];
 @endphp
