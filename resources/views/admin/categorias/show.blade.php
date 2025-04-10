@@ -17,7 +17,7 @@
         <div class="mb-4">
             <div class="flex items-center justify-center">
                 @if($categoria->imagen)
-                    <img src="{{Storage::url('public/'.$categoria->imagen)}}" alt="Imagen de {{ $categoria->nombre }}" class="w-full h-auto rounded-sm">
+                    <img src="{{ asset('storage/' . $categoria->imagen) }}" alt="Imagen de {{ $categoria->nombre }}" class="w-full h-auto rounded-sm">
                 @else
                     No image
                 @endif

@@ -86,7 +86,7 @@
                         <td class="px-6 py-4">
                             <div class="flex items-center justify-center">
                                 @if($producto->imagen)
-                                    <img src="{{ Storage::url('public/'.$producto->imagen) }}" alt="Imagen de {{ $producto->nombre }}" class="w-10 h-10 rounded-full">
+                                    <img src="{{ asset('storage/' . $producto->imagen) }}" alt="Imagen de {{ $producto->nombre }}" class="w-10 h-10 rounded-full">
                                 @else
                                     No image
                                 @endif

@@ -44,7 +44,7 @@
         <div class="mb-4">
             <div class="flex items center justify-center">
                 @if($producto->imagen)
-                    <img src="{{Storage::url('public/'.$producto->imagen)}}" alt="Imagen de {{ $producto->nombre }}" class="w-full h-auto rounded-sm">
+                    <img src="{{ asset('storage/' . $producto->imagen) }}" alt="Imagen de {{ $producto->nombre }}" class="w-full h-auto rounded-sm">
                 @else
                     No image
                 @endif
