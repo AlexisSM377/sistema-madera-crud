@@ -24,7 +24,15 @@ class PuntoVentaController extends Controller
             'productos.*.cantidad' => 'required|integer|min:1',
         ]);
 
-        $productosSeleccionados = collect($request->productos);
+        // Filtrar productos seleccionados con cantidad válida
+        $productosSeleccionados = collect($request->productos)->filter(function ($producto) {
+            return isset($producto['id']) && isset($producto['cantidad']) && $producto['cantidad'] > 0;
+        });
+
+        if ($productosSeleccionados->isEmpty()) {
+            return back()->withErrors(['productos' => 'Debe seleccionar al menos un producto con una cantidad válida.']);
+        }
+
         $total = $productosSeleccionados->sum(function ($producto) {
             $productoModel = Producto::find($producto['id']);
             return $productoModel->precio * $producto['cantidad'];

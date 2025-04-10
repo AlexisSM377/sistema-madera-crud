@@ -33,28 +33,23 @@
 
                             <input 
                                 type="checkbox" 
-                                name="productos[{{ $loop->index }}][id]" 
+                                name="productos[{{ $producto->id }}][id]" 
                                 value="{{ $producto->id }}"
                                 class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:ring-2"
-                                
+                                onchange="toggleCantidadInput(this, {{ $producto->id }})"
                             >
                             {{ $producto->nombre }} - ${{ $producto->precio }}
                         </div>
 
                         <input 
                             type="number" 
-                            name="productos[{{ $loop->index }}][cantidad]" 
+                            name="productos[{{ $producto->id }}][cantidad]" 
+                            id="cantidad-{{ $producto->id }}"
                             placeholder="Cantidad" 
                             min="1" 
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            disabled
                         >
-
-
-
-
-                        {{-- <input type="checkbox" name="productos[{{ $loop->index }}][id]" value="{{ $producto->id }}">
-                        {{ $producto->nombre }} - ${{ $producto->precio }}
-                        <input type="number" name="productos[{{ $loop->index }}][cantidad]" min="1" placeholder="Cantidad"> --}}
                     </div>
                 @endforeach
             </div>
@@ -89,6 +84,14 @@
                     })
                 })
             })
+
+            function toggleCantidadInput(checkbox, id) {
+                const cantidadInput = document.getElementById(`cantidad-${id}`);
+                cantidadInput.disabled = !checkbox.checked;
+                if (!checkbox.checked) {
+                    cantidadInput.value = ''; // Clear the input if unchecked
+                }
+            }
         </script>
     @endpush
 </x-layouts.app>
